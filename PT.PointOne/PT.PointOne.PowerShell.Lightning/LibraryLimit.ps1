@@ -6,6 +6,11 @@ Connect-SPOnline https://aspc1606.sharepoint.com/sites/dev -Credentials "Aspc160
 
 $libraryName = "LargeLibrary"
 
-# test that we can add a single file
-Add-SPOFile -Path "C:\Temp\Document.docx" -Folder "$libraryName/Test" 
 
+$folderNames = ("HR","Sales","Marketing","Dev","Research","Social","Test")
+$folderNames | Foreach { 
+    $folderName = $_ 
+    (0..2) | % {
+        Write-Output "$libraryName/$folderName/TestDocument$folderName$_.docx"
+    }
+}
