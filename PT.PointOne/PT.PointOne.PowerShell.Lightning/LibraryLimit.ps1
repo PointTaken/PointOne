@@ -6,13 +6,14 @@ Connect-SPOnline https://aspc1606.sharepoint.com/sites/dev -Credentials "Aspc160
 
 $libraryName = "LargeLibrary"
 
+$originalFilePath = "C:\Temp\Document.docx"
 
 $folderNames = ("HR","Sales","Marketing","Dev","Research","Social","Test")
 $folderNames | Foreach { 
     $folderName = $_ 
     (0..2) | % {
-        Write-Output "$libraryName/$folderName/TestDocument$folderName$_.docx"
+        $folder = "$libraryName/$folderName/"
+        $fileName = "TestDocument$folderName$_.docx"
+        Copy-Item -LiteralPath $originalFilePath -Destination "C:\temp\$fileName"
     }
 }
-get-help Copy-Item -Detailed
-get-help Remove-Item -Detailed
