@@ -14,3 +14,5 @@ $folderNames | Foreach {
         Write-Output "$libraryName/$folderName/TestDocument$folderName$_.docx"
     }
 }
+get-help Copy-Item -Detailed
+get-help Remove-Item -Detailed
