@@ -9,11 +9,12 @@ $originalFilePath = "C:\Temp\Document.docx"
 
 $folderNames = ("HR","Sales","Marketing","Dev","Research","Social","Test")
 $folderCount = $folderNames.Length
-$lowerLimit = 0
-$upperLimit = 700
+$lowerLimit = 164
+$upperLimit = 699
 $items = $upperLimit - $lowerLimit
 $counter = 0
 ($lowerLimit..$upperLimit) | % {
+    if ($_ % 50 -eq 0) { Connect-SPOnline https://aspc1606.sharepoint.com/sites/dev -Credentials "Aspc1606" }
     $leaf = $_ 
     Write-Progress -ID 1 -Activity "Uploading files" -PercentComplete (100*$counter / $items)
     $counter = $counter + 1
