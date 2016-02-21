@@ -14,6 +14,6 @@ $folderNames | Foreach {
     (0..2) | % {
         $folder = "$libraryName/$folderName/"
         $fileName = "TestDocument$folderName$_.docx"
-        Copy-Item -LiteralPath $originalFilePath -Destination "C:\temp\$fileName"
+        Remove-Item -Path "C:\temp\$fileName"
     }
 }
