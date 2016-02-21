@@ -8,8 +8,14 @@ $libraryName = "LargeLibrary"
 $originalFilePath = "C:\Temp\Document.docx"
 
 $folderNames = ("HR","Sales","Marketing","Dev","Research","Social","Test")
-(0..2) | % {
+$lowerLimit = 0
+$upperLimit = 1000
+$items = $upperLimit - $lowerLimit
+$counter = 0
+($lowerLimit..$upperLimit) | % {
     $leaf = $_ 
+    Write-Progress -Activity "Uploading files" -PercentComplete (100*$counter / $items)
+    $counter = $counter + 1
     $folderNames | % { 
         $folder = "$libraryName/$_"
         $fileName = "TestDocument$_$leaf.docx"
