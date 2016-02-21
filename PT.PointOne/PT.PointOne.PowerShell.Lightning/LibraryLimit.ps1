@@ -2,10 +2,10 @@
 # LibraryLimit.ps1
 #
 Connect-SPOnline https://aspc1606.sharepoint.com/sites/large -Credentials "Aspc1606"
+Connect-SPOnline https://aspc1606.sharepoint.com/sites/dev -Credentials "Aspc1606"
 
-$libraryName = "Documents"
+$libraryName = "LargeLibrary"
 
-$folderNames = ("HR","Sales","Marketing","Dev","Research","Social","Tant","Fjas")
-$folderNames | Foreach { 
-    $folderName = $_ 
-}
+# test that we can add a single file
+Add-SPOFile -Path "C:\Temp\Document.docx" -Folder "$libraryName/Test" 
+
