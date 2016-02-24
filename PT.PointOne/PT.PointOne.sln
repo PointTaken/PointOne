@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F5034706-568F-408A-B7B3-4D38C6DB8A32}") = "PT.PointOne.PowerShell.Lightning", "PT.PointOne.PowerShell.Lightning\PT.PointOne.PowerShell.Lightning.pssproj", "{6CAFC0C6-A428-4D30-A9F9-700E829FEA51}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{4B3EAA97-A0A8-4DB8-AA51-8045CCD32C2E}"
+	ProjectSection(SolutionItems) = preProject
+		Resources\Superheroes.txt = Resources\Superheroes.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
