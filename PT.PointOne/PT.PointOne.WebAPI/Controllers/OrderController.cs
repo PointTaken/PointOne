@@ -7,6 +7,7 @@ using Microsoft.SharePoint;
 using Microsoft.SharePoint.Client;
 using System.Security;
 using System.Configuration;
+using IOTHubInterface.Models;
 
 namespace PT.PointOne.WebAPI.Controllers
 {
@@ -14,6 +15,13 @@ namespace PT.PointOne.WebAPI.Controllers
     public class OrderController : ApiController
     {
         public static List<Order> orders = new List<Order>();
+        public static double OrderCount 
+        {
+            get
+            {
+                return orders.Count;
+            }            
+        }
         private bool Locked
         {
             get
@@ -29,57 +37,26 @@ namespace PT.PointOne.WebAPI.Controllers
             var x = Request.Content.ReadAsStringAsync();
             if (string.IsNullOrEmpty(request.OrderId))
                 return new OrderStatusResponse { Locked = Locked, RequestId = "", Status = OrderStatus.ERROR, Message = "Order ID missing" };
-
-            // TODO: Create order entry in SP list 
-            using (var ctx = new ClientContext("https://aspc1606.sharepoint.com/sites/PointOneArms/Management"))
+            
+            var RequestId = Guid.NewGuid();
+            var order = new Order
             {
-                ctx.Credentials = new SharePointOnlineCredentials("hs@aspc1606.onmicrosoft.com", GetPWD());
-                ctx.Load(ctx.Web);
-                ctx.ExecuteQuery(); 
-               var list = ctx.Web.Lists.GetByTitle("Orders");
-                ctx.Load(list);
-                ctx.ExecuteQuery(); 
+                OrderId = request.OrderId,
+                RequestId = RequestId.ToString(),
+                ProductId = "34",
+                Created = DateTime.Now,
+                Poured = null,
+                Paid = true,
+                Price = double.Parse(request.Price), 
+                UserId = request.UserId,                
+                Status = OrderStatus.QUEUED,
+                TapStatus = TapStatus.Waiting,
 
-                var lic = new ListItemCreationInformation();
-                
-                var item = list.AddItem(lic);
-                
-                item["Title"] = "New order received";
-                item.Update();
-                list.Update();
-                ctx.ExecuteQuery();
-
-            }
-
-        
-
-        
-
-        var RequestId = Guid.NewGuid();
-        var order = new Order
-        {
-            OrderId = request.OrderId,
-            RequestId = RequestId.ToString(),
-            ProductId = "15",
-            Created = DateTime.Now,
-            Poured = null,
-            Paid = true,
-            Status = OrderStatus.QUEUED,
-            TapStatus = TapStatus.Waiting
-        };
-        orders.Add(order);
+            };
+            SharePointOnline.AddNewOrder(order);
+            orders.Add(order);
             return new OrderStatusResponse { Locked = Locked, RequestId = RequestId.ToString(), Status = order.Status, Message = "" };
-}
-
-        private SecureString GetPWD()
-        {
-            var pwd = ConfigurationManager.AppSettings["Password"];
-            var ss = new SecureString();
-                foreach (var c in pwd)
-                ss.AppendChar(c);
-
-            return ss; 
-        }
+        } 
 
         [HttpPost]
         [Route("Pour")]

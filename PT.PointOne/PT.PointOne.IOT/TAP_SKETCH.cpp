@@ -1,8 +1,8 @@
 ﻿#include <ESP8266WiFi.h>
 
-const char* ssid = "Mentoware";
-const char* password = "jan banan";
-const char* host = "fear.azurewebsites.net";//"192.168.1.107"; 
+const char* ssid = "wlankonferanse";
+const char* password = "Voksen2013";
+const char* host = "pointone.azurewebsites.net";//"192.168.1.107"; 
 const int tapPin = 4;
 const int statusPin = 2;
 int retryCount = 0;
@@ -169,9 +169,3 @@ int POSTMESSAGE(String message)
 	}
 	return 0;
 }
-
-
-
-
-
-
