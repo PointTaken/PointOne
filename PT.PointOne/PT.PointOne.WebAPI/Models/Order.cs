@@ -15,6 +15,6 @@ namespace PT.PointOne.WebAPI.Models
         public TapStatus TapStatus; 
         public bool Paid;
         public string UserId;
-        public double Price; 
-    } 
+        public double Price;
+    }
 }

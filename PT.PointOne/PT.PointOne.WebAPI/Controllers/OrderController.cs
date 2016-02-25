@@ -36,20 +36,22 @@ namespace PT.PointOne.WebAPI.Controllers
             if (string.IsNullOrEmpty(request.OrderId))
                 return new OrderStatusResponse { Locked = Locked, RequestId = "", Status = OrderStatus.ERROR, Message = "Order ID missing" };
 
+            var rnd = new Random();
+            var productId = rnd.Next(32) + 2; // IDs 2 to 34
+
             var RequestId = Guid.NewGuid();
             var order = new Order
             {
                 OrderId = request.OrderId,
                 RequestId = RequestId.ToString(),
-                ProductId = "34",
+                ProductId = productId.ToString(),
                 Created = DateTime.Now,
                 Poured = null,
                 Paid = true,
                 Price = double.Parse(request.Price),
                 UserId = request.UserId,
                 Status = OrderStatus.QUEUED,
-                TapStatus = TapStatus.Waiting,
-
+                TapStatus = TapStatus.Waiting
             };
             SharePointOnline.AddNewOrder(order);
             orders.Add(order);
