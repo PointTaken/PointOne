@@ -6,7 +6,7 @@ namespace PT.PointOne.WebAPI
     {
         public void Configuration(IAppBuilder app)
         {
-
+            app.MapSignalR();
         }
     }
 }

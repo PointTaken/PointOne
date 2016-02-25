@@ -1,21 +1,17 @@
-﻿using IOTHubInterface.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Http;
 
-namespace IOTHubInterface.Controllers
+namespace PT.PointOne.WebAPI.Controllers
 {
     [RoutePrefix("Stock")]
-    public class StockController : Controller
+    public class StockController : ApiController
     {
 
-        [Route("All")]
-        // GET: Stock
+        [HttpGet]
+        [Route("All")]         
         public List<Stock> All()
         {
-            SharePointOnline.
+            return SharePointOnline.StockList;
         }
     }
 }

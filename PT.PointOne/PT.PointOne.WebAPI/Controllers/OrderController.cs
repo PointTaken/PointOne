@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
-using IOTHubInterface.Models;
 using System.Web.Http.Cors;
 
 namespace PT.PointOne.WebAPI.Controllers

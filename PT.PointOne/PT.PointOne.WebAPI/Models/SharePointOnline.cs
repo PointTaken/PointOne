@@ -2,11 +2,12 @@
 using Microsoft.SharePoint.Client.Taxonomy;
 using PT.PointOne.WebAPI.Models;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Security;
 
-namespace IOTHubInterface.Models
+namespace PT.PointOne.WebAPI
 {
     public class SharePointOnline
     {
@@ -92,14 +93,61 @@ namespace IOTHubInterface.Models
         {
             get
             {
-                return new List<Stock>();
-            }
-        }     
+                var Stock = new List<Stock>();
+                try
+                {
+                    using (var ctx = new ClientContext("https://aspc1606.sharepoint.com/sites/PointOneArms"))
+                    {
+                        ctx.Credentials = new SharePointOnlineCredentials("hs@aspc1606.onmicrosoft.com", GetPWD());
+                        ctx.Load(ctx.Web);
+                        ctx.ExecuteQuery();
+                        var list = ctx.Web.Lists.GetByTitle("Stock");
+                        ctx.Load(list);
+                        ctx.ExecuteQuery();
 
+                        var items = list.GetItems(new CamlQuery());
+                        if (items == null)
+                            return Stock;
+                        
+                        ctx.Load(items);
+                        ctx.ExecuteQuery();
+                        var beerlist = BeerList; 
+                        foreach (var item in items)
+                        {                           
+                            var beerid = ((FieldLookupValue)item["Beer"]).LookupId;
+                            Stock.Add(new Stock()
+                            {
+                                amount = double.Parse(item["Amount"].ToString()),
+                                beer = beerlist.Where(k => k.ID == beerid).FirstOrDefault()
+                            });
+                        }
+
+
+                        return Stock;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return new List<Stock>();
+                }
+            }
+        }
+
+        private static List<Beer> BeerCache;
+        private static DateTime BeerCacheInvalidation; 
         public static List<Beer> BeerList
         {
             get
             {
+                if(BeerCache != null && BeerCache.Count > 0)
+                {
+                    if(BeerCacheInvalidation != null)
+                    {
+                        if (DateTime.Now.Subtract(BeerCacheInvalidation).TotalMinutes <= 5)
+                            return BeerCache; 
+                    }
+                }
+
                 var Beers = new List<Beer>();
                 try
                 {
@@ -114,33 +162,32 @@ namespace IOTHubInterface.Models
 
                         var items = list.GetItems(new CamlQuery());
                         if (items == null)
-                            return Beers; 
+                            return Beers;
 
                         ctx.Load(items);
                         ctx.ExecuteQuery();
 
                         foreach (var item in items)
-                        {
-                            ctx.Load(item);
-                            ctx.ExecuteQuery();
+                        {                    
                             Beers.Add(new Beer()
                             {
                                 Alcohol = double.Parse((item["Alcohol"] ?? string.Empty).ToString()),
                                 Bitterness = double.Parse((item["Bitterness"] ?? string.Empty).ToString()),
-                                Brewery = int.Parse((item["Brewery"] ?? string.Empty).ToString()),
+                                Brewery = ((FieldLookupValue)item["Brewery"]).LookupId.ToString(),
                                 Colour = item["Colour"].ToString(),
-                                Country = item["Country"].ToString(),
+                                Country = ((TaxonomyFieldValue)item["Country"]).Label,
                                 Freshness = double.Parse((item["Freshness"] ?? string.Empty).ToString()),
                                 Out = double.Parse((item["Out"] ?? string.Empty).ToString()),
-                                Title = item["Title"].ToString()
+                                Title = item["Title"].ToString(),
+                                ID = int.Parse(item["ID"].ToString())
                             });
                         }
-
-
+                        BeerCache = Beers;
+                        BeerCacheInvalidation = DateTime.Now; 
                         return Beers;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return new List<Beer>();
                 }
@@ -179,7 +226,7 @@ namespace IOTHubInterface.Models
                     {
                         Alcohol = double.Parse((beer["Alcohol"] ?? string.Empty).ToString()),
                         Bitterness = double.Parse((beer["Bitterness"] ?? string.Empty).ToString()),
-                        Brewery = ((FieldLookupValue)beer["Brewery"]).LookupId,
+                        Brewery = ((FieldLookupValue)beer["Brewery"]).LookupId.ToString(),
                         Colour = beer["Colour"].ToString(),
                         Country = ((TaxonomyFieldValue)beer["Country"]).Label,
                         Freshness = double.Parse((beer["Freshness"] ?? string.Empty).ToString()),
@@ -203,4 +250,6 @@ namespace IOTHubInterface.Models
             return ss;
         }
     }
-},
+}
+
+
