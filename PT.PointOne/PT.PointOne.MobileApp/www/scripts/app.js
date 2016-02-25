@@ -6,6 +6,12 @@ $("#pour").on("click", function() {
     PourOrder();
 });
 
+yam.connect.loginButton('#yammer-login', function (resp) {
+    if (resp.authResponse) {
+        document.getElementById('yammer-login').innerHTML = 'Welcome to Yammer!';
+    }
+});
+
 function order() {
     var name = $("#name").val();
     var status = $("#status");
