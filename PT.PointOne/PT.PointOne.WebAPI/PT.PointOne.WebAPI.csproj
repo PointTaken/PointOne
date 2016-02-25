@@ -291,6 +291,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderStatusRequest.cs" />
     <Compile Include="Models\OrderStatusResponse.cs" />
+    <Compile Include="Models\SharePointOnline.cs" />
     <Compile Include="Models\TapRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

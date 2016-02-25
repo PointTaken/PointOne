@@ -17,7 +17,9 @@ namespace PT.PointOne.WebAPI.Models
         public DateTime? Poured;
         public OrderStatus Status;
         public TapStatus TapStatus; 
-        public bool Paid;        
+        public bool Paid;
+        public string UserId;
+        public double Price; 
     }
     
 }
