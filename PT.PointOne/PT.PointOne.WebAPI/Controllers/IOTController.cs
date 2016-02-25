@@ -19,24 +19,24 @@ namespace PT.PointOne.WebAPI.Controllers
         public class IOTParams
         {
             public string customerId { get; set; }
-            public bool tappedCompleted { get; set; } 
+            public bool tappedCompleted { get; set; }
         }
         private RegistryManager registryManager;
-        private string connectionString = "HostName=helgesmebyiot.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=JysiEI6uUIoYgypD4B/XbbZe3S7skmq7adSKhELNCAk=";        
+        private string connectionString = "HostName=helgesmebyiot.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=JysiEI6uUIoYgypD4B/XbbZe3S7skmq7adSKhELNCAk=";
         private DeviceClient deviceClient;
         public Device device;
         private string iotHubUri = "helgesmebyiot.azure-devices.net";
         private string DEVICE_ID = "ESP-12-BEERTAPPER";
-        private string deviceKey; 
+        private string deviceKey;
 
         [HttpPost]
-        public async Task<IOTInfo> PostStatus(IOTParams par)   
+        public async Task<IOTInfo> PostStatus(IOTParams par)
         {
-            if(!VerifyDeviceKey().Result)
+            if (!VerifyDeviceKey().Result)
                 return new IOTInfo { Text = "ERR-KEY" };
 
             deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("ESP-12-BEERTAPPER", deviceKey));
-            await SendDeviceToCloudMessagesAsync(par.customerId, par.tappedCompleted);            
+            await SendDeviceToCloudMessagesAsync(par.customerId, par.tappedCompleted);
             return new IOTInfo { Text = "OK" };
         }
 
@@ -45,15 +45,15 @@ namespace PT.PointOne.WebAPI.Controllers
         {
             registryManager = RegistryManager.CreateFromConnectionString(connectionString);
             var devices = await registryManager.GetDevicesAsync(5);
-            
+
             await registryManager.RemoveDeviceAsync(devices.First());
-           
-            
+
+
 
             if (!VerifyDeviceKey().Result)
                 return new IOTInfo { Text = "ERR-KEY" };
 
-            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("ESP-12-BEERTAPPER", deviceKey));            
+            deviceClient = DeviceClient.Create(iotHubUri, new DeviceAuthenticationWithRegistrySymmetricKey("ESP-12-BEERTAPPER", deviceKey));
             var message = await deviceClient.ReceiveAsync();
 
 
@@ -71,7 +71,7 @@ namespace PT.PointOne.WebAPI.Controllers
             if (deviceKey != null || deviceKey.Length > 0)
                 return true;
 
-            return false;                 
+            return false;
         }
 
         private async Task SendDeviceToCloudMessagesAsync(string customerId, bool tappedCompleted)
@@ -84,8 +84,8 @@ namespace PT.PointOne.WebAPI.Controllers
             };
             var messageString = JsonConvert.SerializeObject(telemetryData);
             var message = new Microsoft.Azure.Devices.Client.Message(Encoding.ASCII.GetBytes(messageString));
-            await deviceClient.SendEventAsync(message); 
-                       
+            await deviceClient.SendEventAsync(message);
+
         }
 
         private async Task GetDeviceKey()
@@ -94,13 +94,15 @@ namespace PT.PointOne.WebAPI.Controllers
             {
                 registryManager = RegistryManager.CreateFromConnectionString(connectionString);
                 device = await registryManager.AddDeviceAsync(new Device(DEVICE_ID));
-            }catch(DeviceAlreadyExistsException)
+            }
+            catch (DeviceAlreadyExistsException)
             {
                 device = await registryManager.GetDeviceAsync(DEVICE_ID);
-            }     catch(Exception ex)
+            }
+            catch (Exception ex)
             {
-                var y = ex.Message; 
-            }       
+                var y = ex.Message;
+            }
         }
     }
 }

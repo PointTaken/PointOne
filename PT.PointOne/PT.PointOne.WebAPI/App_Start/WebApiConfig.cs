@@ -15,8 +15,6 @@ namespace PT.PointOne.WebAPI
             config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
-
-           
         }
     }
 }
