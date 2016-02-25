@@ -27,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Beers.ps1" />
     <Compile Include="Breweries.ps1" />
     <Compile Include="SuperHeroes.ps1" />
   </ItemGroup>
