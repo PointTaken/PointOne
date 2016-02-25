@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace IOTHubInterface
+namespace PT.PointOne.WebAPI
 {
     public partial class Admin : System.Web.UI.Page
     {

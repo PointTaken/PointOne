@@ -1,4 +1,4 @@
-﻿using IOTHubInterface.Models;
+﻿using PT.PointOne.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -8,7 +8,7 @@ using Microsoft.SharePoint.Client;
 using System.Security;
 using System.Configuration;
 
-namespace IOTHubInterface.Controllers
+namespace PT.PointOne.WebAPI.Controllers
 {
     [RoutePrefix("Order")]
     public class OrderController : ApiController

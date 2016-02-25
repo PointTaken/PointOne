@@ -6,7 +6,7 @@ using Owin;
 
 
 
-namespace IOTHubInterface
+namespace PT.PointOne.WebAPI
 {
     public partial class Startup
     {

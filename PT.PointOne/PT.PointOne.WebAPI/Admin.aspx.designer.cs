@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace IOTHubInterface
+namespace PT.PointOne.WebAPI
 {
 
 

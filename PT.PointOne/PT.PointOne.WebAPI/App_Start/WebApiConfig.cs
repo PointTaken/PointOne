@@ -6,7 +6,7 @@ using System.Web.Http;
 
 using Newtonsoft.Json.Serialization;
 
-namespace IOTHubInterface
+namespace PT.PointOne.WebAPI
 {
     public static class WebApiConfig
     {

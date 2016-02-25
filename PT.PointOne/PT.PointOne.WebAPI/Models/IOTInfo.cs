@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IOTHubInterface.Models
+namespace PT.PointOne.WebAPI.Models
 {
-    public class OrderStatusRequest
+    public class IOTInfo
     {
-        public string RequestID { get; set; } 
+        public string Text;
+        
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IOTHubInterface.Models
+namespace PT.PointOne.WebAPI.Models
 {
     public enum OrderStatus { WAITING_FOR_PAYMENT, QUEUED, READY, POURING,  ERROR, COMPLETE  }
     public class OrderStatusResponse
