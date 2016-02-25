@@ -147,6 +147,51 @@ namespace IOTHubInterface.Models
         }
 
 
+        public static List<Beer> GetBeersByCountry(string country)
+        {
+            var beers = new List<Beer>();
+            using (var ctx = new ClientContext("https://aspc1606.sharepoint.com/sites/PointOneArms"))
+            {
+                ctx.Credentials = new SharePointOnlineCredentials("hs@aspc1606.onmicrosoft.com", GetPWD());
+                ctx.Load(ctx.Web);
+                ctx.ExecuteQuery();
+                var list = ctx.Web.Lists.GetByTitle("Beers");
+                ctx.Load(list);
+                ctx.ExecuteQuery();
+                var beerItems = list.GetItems(new CamlQuery { ViewXml = string.Format(@"<View>
+                            <Query>
+                                <Where>
+                                    <Eq>
+                                        <FieldRef Name='Country'/>
+                                        <Value Type='TaxonomyFieldType'>{0}</Value>
+                                    </Eq>
+                                </Where>
+                            </Query>
+                        </View>", country) });
+                ctx.Load(beerItems);
+                ctx.ExecuteQuery();
+                foreach (var beer in beerItems)
+                {
+                    ctx.Load(beer);
+                    ctx.ExecuteQuery();
+                    beers.Add(new Beer()
+                    {
+                        Alcohol = double.Parse((beer["Alcohol"] ?? string.Empty).ToString()),
+                        Bitterness = double.Parse((beer["Bitterness"] ?? string.Empty).ToString()),
+                        Brewery = 1, //;#Ringnes", // int.Parse((beer["Brewery"] ?? string.Empty).ToString()),
+                        Colour = beer["Colour"].ToString(),
+                        Country = beer["Country"].ToString(),
+                        Freshness = double.Parse((beer["Freshness"] ?? string.Empty).ToString()),
+                        Out = double.Parse((beer["Out"] ?? string.Empty).ToString()),
+                        Title = beer["Title"].ToString()
+                    });
+                }
+            }
+            return beers;
+        }
+
+
+
         private static SecureString GetPWD()
         {
             var pwd = ConfigurationManager.AppSettings["Password"];
