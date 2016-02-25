@@ -50,7 +50,9 @@ namespace IOTHubInterface.Controllers
 
             order.Status = OrderStatus.COMPLETE;
             order.TapStatus = TapStatus.Poured;
-            order.Poured = DateTime.Now; 
+            order.Poured = DateTime.Now;
+
+        // TODO: Update order in sharepoint list. 
 
             return new DeviceStatusResponse { RequestId = request.RequestId, TapStatus = order.TapStatus };
         }
