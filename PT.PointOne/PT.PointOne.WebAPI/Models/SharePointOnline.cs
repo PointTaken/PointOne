@@ -82,6 +82,65 @@ namespace IOTHubInterface.Models
             }
         }
 
+        public static List<Stock> StockList
+        {
+            get
+            {
+                return new List<Stock>();
+            }
+        }     
+
+        public static List<Beer> BeerList
+        {
+            get
+            {
+                var Beers = new List<Beer>();
+                try
+                {
+                    using (var ctx = new ClientContext("https://aspc1606.sharepoint.com/sites/PointOneArms"))
+                    {
+                        ctx.Credentials = new SharePointOnlineCredentials("hs@aspc1606.onmicrosoft.com", GetPWD());
+                        ctx.Load(ctx.Web);
+                        ctx.ExecuteQuery();
+                        var list = ctx.Web.Lists.GetByTitle("Beers");
+                        ctx.Load(list);
+                        ctx.ExecuteQuery();
+
+                        var items = list.GetItems(new CamlQuery());
+                        if (items == null)
+                            return Beers; 
+
+                        ctx.Load(items);
+                        ctx.ExecuteQuery();
+
+                        foreach (var item in items)
+                        {
+                            ctx.Load(item);
+                            ctx.ExecuteQuery();
+                            Beers.Add(new Beer()
+                            {
+                                Alcohol = double.Parse((item["Alcohol"] ?? string.Empty).ToString()),
+                                Bitterness = double.Parse((item["Bitterness"] ?? string.Empty).ToString()),
+                                Brewery = int.Parse((item["Brewery"] ?? string.Empty).ToString()),
+                                Colour = item["Colour"].ToString(),
+                                Country = item["Country"].ToString(),
+                                Freshness = double.Parse((item["Freshness"] ?? string.Empty).ToString()),
+                                Out = double.Parse((item["Out"] ?? string.Empty).ToString()),
+                                Title = item["Title"].ToString()
+                            });
+                        }
+
+
+                        return Beers;
+                    }
+                }
+                catch (Exception)
+                {
+                    return new List<Beer>();
+                }
+            }
+        }
+
 
         private static SecureString GetPWD()
         {
@@ -94,4 +153,4 @@ namespace IOTHubInterface.Models
         }
 
     }
-}
+},
