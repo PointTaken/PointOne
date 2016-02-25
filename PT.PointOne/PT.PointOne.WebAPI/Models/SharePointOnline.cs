@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using PT.PointOne.WebAPI.Models;
 using System;
 using System.Configuration;
@@ -180,7 +181,7 @@ namespace IOTHubInterface.Models
                         Bitterness = double.Parse((beer["Bitterness"] ?? string.Empty).ToString()),
                         Brewery = ((FieldLookupValue)beer["Brewery"]).LookupId,
                         Colour = beer["Colour"].ToString(),
-                        Country = beer["Country"].ToString(),
+                        Country = ((TaxonomyFieldValue)beer["Country"]).Label,
                         Freshness = double.Parse((beer["Freshness"] ?? string.Empty).ToString()),
                         Out = double.Parse((beer["Out"] ?? string.Empty).ToString()),
                         Title = beer["Title"].ToString()
