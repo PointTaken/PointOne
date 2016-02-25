@@ -178,7 +178,7 @@ namespace IOTHubInterface.Models
                     {
                         Alcohol = double.Parse((beer["Alcohol"] ?? string.Empty).ToString()),
                         Bitterness = double.Parse((beer["Bitterness"] ?? string.Empty).ToString()),
-                        Brewery = 1, //;#Ringnes", // int.Parse((beer["Brewery"] ?? string.Empty).ToString()),
+                        Brewery = ((FieldLookupValue)beer["Brewery"]).LookupId,
                         Colour = beer["Colour"].ToString(),
                         Country = beer["Country"].ToString(),
                         Freshness = double.Parse((beer["Freshness"] ?? string.Empty).ToString()),
