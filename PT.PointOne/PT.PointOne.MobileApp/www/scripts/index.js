@@ -14,7 +14,7 @@
         //$("#order").on("click", function () {
         //    order();
         //});
-
+        var requestId;
         //$("#pour").on("click", function () {
         //    PourOrder();
         //});
