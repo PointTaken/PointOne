@@ -19,13 +19,19 @@ namespace IOTHubInterface.Models
                     ctx.Load(ctx.Web);
                     ctx.ExecuteQuery();
                     var list = ctx.Web.Lists.GetByTitle("Purchases");
+                    var beerList = ctx.Web.Lists.GetByTitle("Beers");
                     ctx.Load(list);
+                    ctx.Load(beerList);
+                    ctx.ExecuteQuery();
+
+                    var beer = beerList.GetItemById(order.ProductId);
+                    ctx.Load(beer);
                     ctx.ExecuteQuery();
 
                     var lic = new ListItemCreationInformation();
                     var item = list.AddItem(lic);
                     item["Title"] = order.RequestId;
-                    item["Beer"] = "34;#Hulken IPA"; // TODO: Support more beer
+                    item["Beer"] = string.Format("{1};#{0}", beer["Title"], beer.Id); // "34;#Hulken IPA"; // TODO: Support more beer
                     item["Price"] = order.Price.ToString();
                     item["Purchased"] = order.Created;
                     item["Hero"] = new FieldUserValue() { LookupId = int.Parse(order.UserId) }; // TODO: Support more users... 
