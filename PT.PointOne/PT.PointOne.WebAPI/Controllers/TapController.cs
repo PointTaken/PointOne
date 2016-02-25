@@ -1,4 +1,5 @@
-﻿using PT.PointOne.WebAPI.Models;
+﻿using IOTHubInterface.Models;
+using PT.PointOne.WebAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +53,8 @@ namespace PT.PointOne.WebAPI.Controllers
             order.TapStatus = TapStatus.Poured;
             order.Poured = DateTime.Now;
 
-        // TODO: Update order in sharepoint list. 
+            // TODO: Update order in sharepoint list. 
+            SharePointOnline.UpdateOrder(OrderController.orders.Where(k => k.RequestId == request.RequestId).FirstOrDefault()); 
 
             return new DeviceStatusResponse { RequestId = request.RequestId, TapStatus = order.TapStatus };
         }
