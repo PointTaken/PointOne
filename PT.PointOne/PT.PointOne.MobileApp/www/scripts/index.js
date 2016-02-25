@@ -11,8 +11,13 @@
         // Handle the Cordova pause and resume events
         document.addEventListener( 'pause', onPause.bind( this ), false );
         document.addEventListener( 'resume', onResume.bind( this ), false );
+        //$("#order").on("click", function () {
+        //    order();
+        //});
 
-        $("#orderButton").click(orderBeer);
+        //$("#pour").on("click", function () {
+        //    PourOrder();
+        //});
     };
 
     function onPause() {
