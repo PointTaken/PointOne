@@ -1,7 +1,7 @@
 #
 # SuperHeroes.ps1
 #
-$url = https://aspc1606.sharepoint.com/sites/PointOneArms
+$url = "https://aspc1606.sharepoint.com/sites/PointOneArms"
 
 Connect-SPOnline -Url $url -Credentials Aspc1606
 

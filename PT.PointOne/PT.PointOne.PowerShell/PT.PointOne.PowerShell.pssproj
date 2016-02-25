@@ -29,6 +29,9 @@
   <ItemGroup>
     <Compile Include="Beers.ps1" />
     <Compile Include="Breweries.ps1" />
+    <Compile Include="Orders.ps1" />
+    <Compile Include="Purchases.ps1" />
+    <Compile Include="Stock.ps1" />
     <Compile Include="SuperHeroes.ps1" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
