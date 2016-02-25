@@ -62,6 +62,7 @@ namespace PT.PointOne.WebAPI.Controllers
 
         [HttpPost]
         [Route("Pour")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public OrderStatusResponse Pour(OrderStatusRequest request)
         {
             try {
@@ -97,6 +98,7 @@ namespace PT.PointOne.WebAPI.Controllers
 
         [HttpGet]
         [Route("Status/{requestID}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public OrderStatusResponse Status(string requestID)
         {
             if (DateTime.Now.Subtract(TapController.LastPing).TotalSeconds > 20)
