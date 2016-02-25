@@ -1,10 +1,13 @@
 {
-    "name": "PT.PointOne.MobileApp",
-    "version": "1.0.0",
-    "dependencies": {
-        "gulp": "^3.9.1",
-        "gulp-uglify": "^1.5.1",
-        "gulp-concat": "^2.6.0",
-        "cordova-lib": "6.0.0"
-   }
+  "name": "PT.PointOne.MobileApp",
+  "version": "1.0.0",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^1.5.1",
+    "gulp-concat": "^2.6.0",
+    "cordova-lib": "6.0.0"
+  },
+  "devDependencies": {
+    "gulp-cordova-build-ios": "^1.0.0"
+  }
 }

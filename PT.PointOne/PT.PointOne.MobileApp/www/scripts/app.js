@@ -9,7 +9,7 @@ $("#pour").on("click", function() {
 function order() {
     var name = $("#name").val();
     var status = $("#status");
-    var data = JSON.stringify({ OrderId: "123", UserId: "31", Price: "49" });
+    var data = { OrderId: "123", UserId: "31", Price: "49" };
     $.ajax({
         url: "http://pointone.azurewebsites.net/Order/New",
         type: "POST",
@@ -20,6 +20,7 @@ function order() {
         },
         data: data,
         success: function(d) {
+            sessionStorage["RequestId"] = d.RequestId
             $("#requestid").val(d.RequestId);
             status.html("Ordered, ready to pour!");
             $("#order").fadeOut();
@@ -30,7 +31,7 @@ function order() {
 
 function PourOrder() {
     var status = $("#status");
-    var data = JSON.stringify({ RequestId: $("#requestid").val() });
+    var data = { RequestId: $("#requestid").val() };
     $.ajax({
         url: "http://pointone.azurewebsites.net/Order/Pour",
         type: "POST",
