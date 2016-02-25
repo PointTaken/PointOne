@@ -1,12 +1,9 @@
 ﻿using Microsoft.SharePoint.Client;
-using PT.PointOne.WebAPI.Controllers;
 using PT.PointOne.WebAPI.Models;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Security;
-using System.Web;
 
 namespace IOTHubInterface.Models
 {
@@ -14,32 +11,40 @@ namespace IOTHubInterface.Models
     {
         public static bool AddNewOrder(Order order)
         {
-            try {
+            try
+            {
                 using (var ctx = new ClientContext("https://aspc1606.sharepoint.com/sites/PointOneArms"))
                 {
                     ctx.Credentials = new SharePointOnlineCredentials("hs@aspc1606.onmicrosoft.com", GetPWD());
                     ctx.Load(ctx.Web);
                     ctx.ExecuteQuery();
                     var list = ctx.Web.Lists.GetByTitle("Purchases");
+                    var beerList = ctx.Web.Lists.GetByTitle("Beers");
                     ctx.Load(list);
+                    ctx.Load(beerList);
                     ctx.ExecuteQuery();
-                    
+
+                    var beer = beerList.GetItemById(order.ProductId);
+                    ctx.Load(beer);
+                    ctx.ExecuteQuery();
+
                     var lic = new ListItemCreationInformation();
                     var item = list.AddItem(lic);
                     item["Title"] = order.RequestId;
-                    item["Beer"] = "34;#Hulken IPA"; // TODO: Support more beer
+                    item["Beer"] = string.Format("{1};#{0}", beer["Title"], beer.Id); // "34;#Hulken IPA"; // TODO: Support more beer
                     item["Price"] = order.Price.ToString();
                     item["Purchased"] = order.Created;
                     item["Hero"] = new FieldUserValue() { LookupId = int.Parse(order.UserId) }; // TODO: Support more users... 
-                    item["Served"] = false; 
+                    item["Served"] = false;
                     item.Update();
                     list.Update();
                     ctx.ExecuteQuery();
                     return true;
                 }
-            }catch(Exception)
+            }
+            catch (Exception)
             {
-                return false; 
+                return false;
             }
         }
 
@@ -151,6 +156,5 @@ namespace IOTHubInterface.Models
 
             return ss;
         }
-
     }
 },

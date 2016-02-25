@@ -1,2 +1,40 @@
 ﻿body {
+    text-align: center;
 }
+
+.nav-pills>li a {
+    border-radius: 0 !important;
+}
+
+.nav-pills>li:nth-child(2)>a {
+    background-color: #23CEAC;
+}
+
+.nav-pills>li:nth-child(3)>a {
+    background-color: #65DAC3;
+}
+
+.nav-pills>li:active {
+    background-color: #34495e;
+}
+
+.centerText {
+    margin-top: 1em;
+}
+
+.centerText p {
+    font-size: 1.6em;
+    padding: .5em;
+}
+
+#orderButton {
+    background-color: #ec7063;
+    height: 140px;
+    border-radius: 200px;
+    margin-top: 1rem;
+}
+
+#backButton a {
+    color: #fff;
+}
+
