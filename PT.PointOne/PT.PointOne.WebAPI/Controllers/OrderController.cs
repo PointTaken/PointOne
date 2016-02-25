@@ -3,10 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
-using Microsoft.SharePoint;
-using Microsoft.SharePoint.Client;
-using System.Security;
-using System.Configuration;
 using IOTHubInterface.Models;
 using System.Web.Http.Cors;
 
