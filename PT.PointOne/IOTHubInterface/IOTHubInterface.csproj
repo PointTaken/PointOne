@@ -300,6 +300,8 @@
     <Content Include="Global.asax" />
     <Content Include="Index.html" />
     <None Include="Properties\PublishProfiles\fear.pubxml" />
+    <None Include="Properties\PublishProfiles\pointone - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\pointone - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ytf.pubxml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
