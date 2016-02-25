@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="\Scripts\jquery-2.2.0.min.js"></script>
+    <script>
+      
+        function order()
+        {
+            var name = $("#name").val();
+            var status = $("#status");
+           
+            $.post("/Order/New", { OrderId: "123" }, function (d) {
+                $("#requestid").val(d.RequestId);
+                status.html('Ordered, ready to pour!');
+                $("#order").fadeOut();
+                $("#pour").fadeIn();
+            });
+        }
+
+        function PourOrder()
+        {
+            var status = $("#status");
+            $.post("/Order/Pour", { RequestId: $("#requestid").val() }, function (d) {
+                if (d.Status == 1)
+                {
+                    status.html("Tap is busy right now, try again when it's free!");
+                    return; 
+                }
+
+                if (d.Status == 4)
+                {
+                    status.html("Error: " + d.Message + " Try again later!");
+                    return; 
+                }
+                    
+                status.html('Pouring, please wait!');
+                $("#pour").fadeOut();
+                GetPourStatus();
+            });
+        }
+
+        function GetPourStatus() {                        
+            var interval = setInterval(function () {            
+                var rid = $("#requestid").val();
+                var status = $("#status");
+                $.get("/Order/Status/" + rid, function (d) {
+                    status.html(ParseStatus(d.Status));
+                    console.log(d);
+                    if (d.Status == 5) { // Order complete
+                        clearInterval(interval);
+                        $("#order").fadeIn();
+                    }
+                    if (d.Status == 4) { // Order error, try again
+                        clearInterval(interval);
+                        status.html('ERROR: ' + d.Message);
+                        $("#pour").fadeIn();
+                    }
+                });
+            }, 500);
+        }
+
+        function ParseStatus(status)
+        {
+            if (status == 0)
+                return "WAITING_FOR_PAYMENT";
+            if (status == 1)
+                return "Your drink is queued";
+            if (status == 2)
+                return "Drink is ready to be poured... waiting for device to respond to request.";
+            if (status == 3)
+                return "Your drink is being poured by device!";
+            if (status == 4)
+                return "An error occured :(";
+            if (status == 5)
+                return "Enjoy! :) ";
+        }
+
+    </script>
+</head>
+<body>
+    <h1>ARC Tap Prototype</h1>
+  
+    
+    <input type="hidden" id="requestid" />
+    <a href="#" onclick="order()" id="order">Order a beer</a>
+    <a href="#" onclick="PourOrder()" id="pour" style="display:none;">Pour</a>
+    <h3>Status:</h3>
+    <div id="status"></div>
+</body>
+</html>
