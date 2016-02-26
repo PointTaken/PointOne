@@ -114,7 +114,7 @@ namespace PT.PointOne.WebAPI
                         ctx.Load(items);
                         ctx.ExecuteQuery();
                         var beerlist = BeerList; 
-                        foreach (var item in items)
+                        items.AsParallel().ForAll(item =>
                         {                           
                             var beerid = ((FieldLookupValue)item["Beer"]).LookupId;
                             Stock.Add(new Stock()
@@ -122,8 +122,7 @@ namespace PT.PointOne.WebAPI
                                 amount = double.Parse(item["Amount"].ToString()),
                                 beer = beerlist.Where(k => k.ID == beerid).FirstOrDefault()
                             });
-                        }
-
+                        });
 
                         return Stock;
                     }
@@ -169,8 +168,8 @@ namespace PT.PointOne.WebAPI
                         ctx.Load(items);
                         ctx.ExecuteQuery();
 
-                        foreach (var item in items)
-                        {
+                        items.AsParallel().ForAll(item =>
+                        {                    
                            /// var metadata = GetMetadataFromBeerAdvocate();  
                             Beers.Add(new Beer()
                             {
@@ -248,7 +247,7 @@ namespace PT.PointOne.WebAPI
                         </View>", country) });
                 ctx.Load(beerItems);
                 ctx.ExecuteQuery();
-                foreach (var beer in beerItems)
+                beerItems.AsParallel().ForAll(beer =>
                 {
                     ctx.Load(beer);
                     ctx.ExecuteQuery();
@@ -263,8 +262,8 @@ namespace PT.PointOne.WebAPI
                         Out = double.Parse((beer["Out"] ?? string.Empty).ToString()),
                         Title = beer["Title"].ToString()
                     });
+                });
                 }
-            }
             return beers;
         }
 
