@@ -12,7 +12,7 @@
             var status = $("#status");
            
             $.post("/Order/New", { OrderId: "123", UserId:"31", Price:"49" }, function (d) {
-                $("#requestid").val(d.RequestId);
+                $("#requestid").text(d.RequestId);
                 status.html('Ordered, ready to pour!');
                 $("#order").fadeOut();
                 $("#pour").fadeIn();

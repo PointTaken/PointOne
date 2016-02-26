@@ -8,6 +8,7 @@ using Microsoft.SharePoint.Client;
 using System.Security;
 using System.Configuration;
 using IOTHubInterface.Models;
+using System.Web.Http.Cors; 
 
 namespace PT.PointOne.WebAPI.Controllers
 {
@@ -32,6 +33,7 @@ namespace PT.PointOne.WebAPI.Controllers
 
         [HttpPost]
         [Route("New")]
+        [EnableCors(origins: "*", headers:"*", methods:"*")]
         public OrderStatusResponse New(NewOrderRequest request)
         {
             var x = Request.Content.ReadAsStringAsync();
@@ -60,6 +62,7 @@ namespace PT.PointOne.WebAPI.Controllers
 
         [HttpPost]
         [Route("Pour")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public OrderStatusResponse Pour(OrderStatusRequest request)
         {
             try {
@@ -95,6 +98,7 @@ namespace PT.PointOne.WebAPI.Controllers
 
         [HttpGet]
         [Route("Status/{requestID}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public OrderStatusResponse Status(string requestID)
         {
             if (DateTime.Now.Subtract(TapController.LastPing).TotalSeconds > 20)
