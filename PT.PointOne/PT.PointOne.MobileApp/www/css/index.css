@@ -18,6 +18,11 @@
     background-color: #34495e;
 }
 
+.beerImg img {
+    max-height: 200px;
+    padding: .5em;
+}
+
 .centerText {
     margin-top: 1em;
 }
@@ -32,6 +37,10 @@
     height: 140px;
     border-radius: 200px;
     margin-top: 1rem;
+}
+
+#order {
+    background-color: #3498db;
 }
 
 #backButton a {
