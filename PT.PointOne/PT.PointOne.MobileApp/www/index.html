@@ -7,7 +7,7 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://pointone.azurewebsites.net data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' http://pointone.azurewebsites.net data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
     <title>PT.PointOne.MobileApp</title>
     <link href="css/vendor/bootstrap.min.css" rel="stylesheet" />
     <!-- PT.PointOne.MobileApp references -->
@@ -32,6 +32,7 @@
     <h3>Status:</h3>
 <div id="status"></div>
 
+    <button class="btn btn-lg btn-primary btn-api">Call API</button>
 <span type="hidden" id="requestid"></span>
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="scripts/jquery-2.2.0.js"></script>

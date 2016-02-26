@@ -6,38 +6,6 @@ $("#pour").on("click", function() {
     PourOrder();
 });
 
-yam.getLoginStatus(
-  function (response) {
-      if (response.authResponse) {
-          console.log("logged in");
-          yam.platform.request({
-              url: "users.json",     //this is one of many REST endpoints that are available
-              method: "GET",
-              data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
-                  "letter": "a",
-                  "page": "2",
-              },
-              success: function (user) { //print message response information to the console
-                  alert("The request was successful.");
-                  console.dir(user);
-              },
-              error: function (user) {
-                  alert("There was an error with the request.");
-              }
-          });
-      }
-      else {
-          alert("not logged in");
-      }
-  }
-);
-
-yam.connect.loginButton('#yammer-login', function (resp) {
-    if (resp.authResponse) {
-        document.getElementById('yammer-login').innerHTML = 'Welcome to Yammer!';
-    }
-});
-
 function order() {
     var name = $("#name").val();
     var status = $("#status");
