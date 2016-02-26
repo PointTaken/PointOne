@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
-using Owin;
-
-
+﻿using Owin;
 
 namespace PT.PointOne.WebAPI
 {
@@ -12,7 +6,7 @@ namespace PT.PointOne.WebAPI
     {
         public void Configuration(IAppBuilder app)
         {
-
+            app.MapSignalR();
         }
     }
 }
