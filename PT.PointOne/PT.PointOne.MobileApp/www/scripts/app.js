@@ -24,6 +24,7 @@ function order() {
             status.html("Ordered, ready to pour!");
             $("#order").fadeOut();
             $("#pour").fadeIn();
+            $("#pour").css("background-color", "#3498db");
         }
     });
 }
