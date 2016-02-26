@@ -73,7 +73,7 @@ namespace PT.PointOne.WebAPI.Controllers
                 Guid RequestID;
                 if (!Guid.TryParse(request.RequestID, out RequestID))
                     return new OrderStatusResponse { Locked = Locked, RequestId = request.RequestID, Status = OrderStatus.ERROR, Message = "Invalid request ID" };
-
+                
                 var order = orders.Where(o => o.RequestId == RequestID.ToString() && o.Status == OrderStatus.QUEUED).FirstOrDefault();
 
                 if (order == null)

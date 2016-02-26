@@ -169,8 +169,8 @@ namespace PT.PointOne.WebAPI
                         ctx.ExecuteQuery();
 
                         items.AsParallel().ForAll(item =>
-                        {                    
-                           /// var metadata = GetMetadataFromBeerAdvocate();  
+                        {
+                            /// var metadata = GetMetadataFromBeerAdvocate();  
                             Beers.Add(new Beer()
                             {
                                 Alcohol = double.Parse((item["Alcohol"] ?? string.Empty).ToString()),
@@ -183,8 +183,8 @@ namespace PT.PointOne.WebAPI
                                 Title = item["Title"].ToString(),
                                 ID = int.Parse(item["ID"].ToString())
                             });
-                            Beers[Beers.Count -1] = GetMetadataFromBeerAdvocate(Beers.Last());
-                        }
+                            Beers[Beers.Count - 1] = GetMetadataFromBeerAdvocate(Beers.Last());
+                        });
                         BeerCache = Beers;
                         BeerCacheInvalidation = DateTime.Now; 
                         return Beers;
