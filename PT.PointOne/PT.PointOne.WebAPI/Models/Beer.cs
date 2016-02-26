@@ -17,5 +17,11 @@ namespace PT.PointOne.WebAPI
         public string Country { get; set; }
 
         public int ID { get; set;  }
+        public string ImageURL
+        {
+            get; set;
+        }
+
+        public string Score { get; set; }
     }
 }

@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="/Scripts/jquery-2.2.0.min.js"></script>
+    <script src="/Scripts/angular.js"></script>
+    <script src="/Scripts/angular-route.js"></script>
+
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.8/js/adal.min.js"></script>
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.8/js/adal-angular.min.js"></script>
+    <script>
+     var app =   angular.module('todoApp', ['ngRoute', 'AdalAngular'])
+   .config(['$routeProvider', '$httpProvider', 'adalAuthenticationServiceProvider', '$locationProvider', function ($routeProvider, $httpProvider, adalProvider, $locationProvider) {
+     
+       $locationProvider.html5Mode({ enabled: true, requireBase: false }).hashPrefix('!');
+       $routeProvider.when("/", {
+           controller: "homeCtrl",
+           templateUrl: "/Index.html",
+           requireADLogin: true
+       });
+
+       adalProvider.init(
+           {
+               instance: 'https://login.microsoftonline.com/',
+               tenant: 'aspc1606.onmicrosoft.com',
+               clientId: 'b7eda59f-4cf8-47bd-886a-efa518ac3531',
+               extraQueryParameter: 'nux=1',
+               //cacheLocation: 'localStorage', // enable this for IE, as sessionStorage does not work for localhost.
+           },
+           $httpProvider
+           );
+
+   }]);
+     app.controller('homeCtrl', ['$scope', 'adalAuthenticationService','$location', '$http', function ($scope, adalService, $location, $http) {
+         $scope.login = function () {
+             console.log("TEST");
+             console.log(adalService.login());
+         };
+         $scope.logout = function () {
+             adalService.logOut();
+         };
+         $scope.isActive = function (viewLocation) {        
+             return viewLocation === $location.path();
+         };
+
+
+         $scope.createGroup = function()
+         {
+             $http.post("https://graph.microsoft.com/v1.0/groups",
+                 {
+                     "description": "description-value",
+                     "displayName": "displayName-value",
+                     "groupTypes": [
+                       "groupTypes-value"
+                     ],
+                     "mailEnabled": true,
+                     "mailNickname": "mailNickname-value",
+                     "securityEnabled": false
+
+                 })
+                 .then(function (d) {
+                     console.log(d);
+                 });
+         }
+     }]);
+
+
+    </script>
+</head>
+<body ng-app="todoApp" ng-controller="homeCtrl">
+   <input type="button" ng-click="login()">Login here </a>
+
+     <h3>Provision a new group</h3>
+    <input type="text" ng-model="Name" /><input type="button" value="Create" ng-click="createGroup()" />
+    <h3>Add users close to currentuser to group</h3>
+    <input type="button" onclick="addUsers()" />
+</body>
+</html>
