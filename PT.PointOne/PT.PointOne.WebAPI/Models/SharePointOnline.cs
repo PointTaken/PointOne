@@ -111,17 +111,16 @@ namespace PT.PointOne.WebAPI
                         
                         ctx.Load(items);
                         ctx.ExecuteQuery();
-                        var beerlist = BeerList; 
-                        foreach (var item in items)
-                        {                           
+                        var beerlist = BeerList;
+                        items.AsParallel().ForAll(item =>
+                        {
                             var beerid = ((FieldLookupValue)item["Beer"]).LookupId;
                             Stock.Add(new Stock()
                             {
                                 amount = double.Parse(item["Amount"].ToString()),
                                 beer = beerlist.Where(k => k.ID == beerid).FirstOrDefault()
                             });
-                        }
-
+                        });
 
                         return Stock;
                     }
@@ -167,8 +166,8 @@ namespace PT.PointOne.WebAPI
                         ctx.Load(items);
                         ctx.ExecuteQuery();
 
-                        foreach (var item in items)
-                        {                    
+                        items.AsParallel().ForAll(item =>
+                        {
                             Beers.Add(new Beer()
                             {
                                 Alcohol = double.Parse((item["Alcohol"] ?? string.Empty).ToString()),
@@ -181,7 +180,7 @@ namespace PT.PointOne.WebAPI
                                 Title = item["Title"].ToString(),
                                 ID = int.Parse(item["ID"].ToString())
                             });
-                        }
+                        });
                         BeerCache = Beers;
                         BeerCacheInvalidation = DateTime.Now; 
                         return Beers;
@@ -218,7 +217,7 @@ namespace PT.PointOne.WebAPI
                         </View>", country) });
                 ctx.Load(beerItems);
                 ctx.ExecuteQuery();
-                foreach (var beer in beerItems)
+                beerItems.AsParallel().ForAll(beer =>
                 {
                     ctx.Load(beer);
                     ctx.ExecuteQuery();
@@ -233,7 +232,7 @@ namespace PT.PointOne.WebAPI
                         Out = double.Parse((beer["Out"] ?? string.Empty).ToString()),
                         Title = beer["Title"].ToString()
                     });
-                }
+                });
             }
             return beers;
         }
