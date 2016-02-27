@@ -106,8 +106,10 @@ myapp.controller('Ctrl', ['$http', '$scope', '$interval', 'adalAuthenticationSer
     
 
     /* Realtime data */
-    $scope.BarInfo =
-    {
+    $http.get("https://pointone.azurewebsites.net/Order/BarStatus").success(function(d) { 
+        $scope.BarInfo = d; 
+    })
+  /*  {
         SoldTonight: 34,
         SoldLastNight: 433,
         PatronsActive: 49,
@@ -115,7 +117,7 @@ myapp.controller('Ctrl', ['$http', '$scope', '$interval', 'adalAuthenticationSer
         MoneySpent: 36694,
         HappyHour: false,
         ServingStopped:false
-    };
+    };*/
     $scope.AutoManagementActive = false;
     $scope.UserAuthenticated = false; 
     $scope.ActivateHappyHour = function()
@@ -128,12 +130,18 @@ myapp.controller('Ctrl', ['$http', '$scope', '$interval', 'adalAuthenticationSer
     var chat = $.connection.chat;
     console.log(chat);
     chat.name = "Test";
-    chat.client.hello = function (message) {
-        console.log("RECEIVED! " + message);
-        $scope.BarInfo.MoneyEarnt = 0; 
-    }
+    chat.client.hello = function (message) {     
+      
+           // console.log("TEST" + message);
+            $scope.BarInfo = message;
+        
+      
+    };
+
     $.connection.hub.start().done(function () {
+        //console.log("TEST");
     });
+
     $scope.Send = function()
     {
         $.connection.hub.start().done(function () {
