@@ -17,7 +17,7 @@
     <link href="css/menu.css" rel="stylesheet" />
 </head>
 <body>
-    <nav>
+    <nav style="margin-top: 30px">
         <a class="dropdown-toggle" href="#" title="Menu">&#9776;</a>
         <ul class="dropdown">
             <li class="active"><a href="popular.html">Popular</a></li>
@@ -25,15 +25,36 @@
             <li><a href="bestselling.html">Bestselling</a></li>
         </ul>
     </nav>
-    <div class="centerText">
-        <div class="beerImg">
-            <img src="images/85c61f471b1dd8c0f5d6e9ea5601a3e7_320x320.jpg" />
-        </div>
-    </div>
-    </br>
-    <button class="btn btn-default btn-wide" id="order">
-        <a href="index.html">Go to beer!</a>
-    </button>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>%</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><a href="details.html">Hulk SMASH!</a></td>
+                <td>7.5%</td>
+                <td>100</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Dead Pool Amber (no longer in stock)</td>
+                <td>5%</td>
+                <td>89</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Punisher Russian Stout (coming soon!)</td>
+                <td>11%</td>
+                <td>82</td>
+            </tr>
+        </tbody>
+    </table>
 
     <!-- Cordova reference, this is added to your app when it's built. -->
     <script src="scripts/jquery-2.2.0.js"></script>

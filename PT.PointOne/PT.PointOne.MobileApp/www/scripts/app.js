@@ -7,7 +7,9 @@ $("#pour").on("click", function() {
 });
 
 function order() {
+    $("#order").hide();
     var name = $("#name").val();
+    
     var status = $("#status");
     var data = { OrderId: "123", UserId: "31", Price: "49" };
     $.ajax({
@@ -62,7 +64,7 @@ function GetPourStatus() {
     var interval = setInterval(function () {
         var rid = $("#requestid").val();
         var status = $("#status");
-        $.get("/Order/Status/" + rid, function (d) {
+        $.get("http://pointone.azurewebsites.net/Order/Status/" + rid, function (d) {
             status.html(ParseStatus(d.Status));
             console.log(d);
             if (d.Status == 5) { // Order complete
