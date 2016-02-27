@@ -53,8 +53,9 @@ namespace PT.PointOne.WebAPI.Controllers
                 Status = OrderStatus.QUEUED,
                 TapStatus = TapStatus.Waiting
             };
-            //SharePointOnline.AddNewOrder(order);
+            SharePointOnline.AddNewOrder(order);          
             orders.Add(order);
+            DistributR.Distribute(BarStatus());
             return new OrderStatusResponse { Locked = Locked, RequestId = RequestId.ToString(), Status = order.Status, Message = "" };
         }
 
@@ -114,21 +115,37 @@ namespace PT.PointOne.WebAPI.Controllers
         [Route("Test")]
         public void Test()
         {
-            DistributR.Distribute("Testing12123");
+          //  DistributR.Distribute("Testing12123");
         }
 
         public class BarStatusResponse
         {
-            public string BeersServed;
-            public string PatronsActive;
-            public string MoneyEarnt;
-            public string MoneySpent;    
+            public string SoldTonight
+            {
+                get; set; }
+            public string SoldLastNight { get; set; }
+            public string PatronsActive {
+                get; set; }
+            public string MoneyEarnt { get; set; }
+            public string MoneySpent { get; set; } 
         }
        [HttpGet]
        [Route("BarStatus")]
-       BarStatusResponse BarStatus()
+       public BarStatusResponse BarStatus()
         {
-            return new BarStatusResponse();
+            var resp = new BarStatusResponse();
+            resp.SoldTonight = orders.Count.ToString();
+            resp.SoldLastNight = 49.ToString(); 
+            resp.PatronsActive = new Random().Next(10, 140).ToString();
+            // TODO: linq it up
+            double x = 0;
+            foreach(var order in orders)
+            {
+                x += order.Price;                 
+            }
+            resp.MoneyEarnt = x.ToString(); 
+            resp.MoneySpent = (orders.Count * 19).ToString();
+            return resp;
         }
       
     }
