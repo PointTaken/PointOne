@@ -112,7 +112,7 @@ void PourBeer()
     Serial.println("Pouring beer!");
     POSTMESSAGE("Pouring");
     digitalWrite(tapPin, HIGH);
-    delay(7000);
+    delay(5000);
     digitalWrite(tapPin, LOW);
     POSTMESSAGE("Poured");
 }

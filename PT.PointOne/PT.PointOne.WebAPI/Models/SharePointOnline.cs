@@ -5,7 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Net;
 using System.Security;
+using System.Text.RegularExpressions;
 
 namespace PT.PointOne.WebAPI
 {
@@ -112,7 +114,7 @@ namespace PT.PointOne.WebAPI
                         ctx.Load(items);
                         ctx.ExecuteQuery();
                         var beerlist = BeerList; 
-                        foreach (var item in items)
+                        items.AsParallel().ForAll(item =>
                         {                           
                             var beerid = ((FieldLookupValue)item["Beer"]).LookupId;
                             Stock.Add(new Stock()
@@ -120,8 +122,7 @@ namespace PT.PointOne.WebAPI
                                 amount = double.Parse(item["Amount"].ToString()),
                                 beer = beerlist.Where(k => k.ID == beerid).FirstOrDefault()
                             });
-                        }
-
+                        });
 
                         return Stock;
                     }
@@ -143,7 +144,7 @@ namespace PT.PointOne.WebAPI
                 {
                     if(BeerCacheInvalidation != null)
                     {
-                        if (DateTime.Now.Subtract(BeerCacheInvalidation).TotalMinutes <= 5)
+                        if (DateTime.Now.Subtract(BeerCacheInvalidation).TotalMinutes <= 55)
                             return BeerCache; 
                     }
                 }
@@ -167,8 +168,9 @@ namespace PT.PointOne.WebAPI
                         ctx.Load(items);
                         ctx.ExecuteQuery();
 
-                        foreach (var item in items)
-                        {                    
+                        items.AsParallel().ForAll(item =>
+                        {
+                            /// var metadata = GetMetadataFromBeerAdvocate();  
                             Beers.Add(new Beer()
                             {
                                 Alcohol = double.Parse((item["Alcohol"] ?? string.Empty).ToString()),
@@ -181,7 +183,8 @@ namespace PT.PointOne.WebAPI
                                 Title = item["Title"].ToString(),
                                 ID = int.Parse(item["ID"].ToString())
                             });
-                        }
+                            Beers[Beers.Count - 1] = GetMetadataFromBeerAdvocate(Beers.Last());
+                        });
                         BeerCache = Beers;
                         BeerCacheInvalidation = DateTime.Now; 
                         return Beers;
@@ -194,6 +197,32 @@ namespace PT.PointOne.WebAPI
             }
         }
 
+       
+        private static Beer GetMetadataFromBeerAdvocate(Beer beer)
+        {
+            var host = "http://www.ratebeer.com/";
+            var searchUrl = "findbeer.asp";
+            var param = "BeerName=" + beer.Title.Replace(" ", "+");
+            var beerURL = "";
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string HtmlResult = wc.UploadString(host + searchUrl, param);
+                beerURL = new Regex("<A HREF=\"/beer/" + beer.Title.ToLower().Replace(" ", "-") + "/\\d+/").Match(HtmlResult).Value;
+                beerURL = beerURL.Replace("<A HREF=\"", "");
+            }
+            if (string.IsNullOrEmpty(beerURL))
+                return beer;
+
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
+                string HtmlResult = wc.UploadString(host + beerURL, param);
+                beer.ImageURL = new Regex("http://res.cloudinary.com/ratebeer/image/upload/\\w+,\\w+/beer_\\d+.jpg").Match(HtmlResult).Value;
+                beer.Score = new Regex("itemprop=\"ratingValue\">\\d+.\\d+").Match(HtmlResult).Value.Replace("itemprop=\"ratingValue\">", "");
+            }
+            return beer; 
+        }
 
         public static List<Beer> GetBeersByCountry(string country)
         {
@@ -218,7 +247,7 @@ namespace PT.PointOne.WebAPI
                         </View>", country) });
                 ctx.Load(beerItems);
                 ctx.ExecuteQuery();
-                foreach (var beer in beerItems)
+                beerItems.AsParallel().ForAll(beer =>
                 {
                     ctx.Load(beer);
                     ctx.ExecuteQuery();
@@ -233,8 +262,8 @@ namespace PT.PointOne.WebAPI
                         Out = double.Parse((beer["Out"] ?? string.Empty).ToString()),
                         Title = beer["Title"].ToString()
                     });
+                });
                 }
-            }
             return beers;
         }
 

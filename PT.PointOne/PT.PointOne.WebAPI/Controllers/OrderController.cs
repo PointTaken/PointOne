@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using System.Linq;
 using System.Web.Http.Cors;
+using PT.PointOne.OfficeAppWeb;
 
 namespace PT.PointOne.WebAPI.Controllers
 {
@@ -52,7 +53,7 @@ namespace PT.PointOne.WebAPI.Controllers
                 Status = OrderStatus.QUEUED,
                 TapStatus = TapStatus.Waiting
             };
-            SharePointOnline.AddNewOrder(order);
+            //SharePointOnline.AddNewOrder(order);
             orders.Add(order);
             return new OrderStatusResponse { Locked = Locked, RequestId = RequestId.ToString(), Status = order.Status, Message = "" };
         }
@@ -73,7 +74,7 @@ namespace PT.PointOne.WebAPI.Controllers
                 Guid RequestID;
                 if (!Guid.TryParse(request.RequestID, out RequestID))
                     return new OrderStatusResponse { Locked = Locked, RequestId = request.RequestID, Status = OrderStatus.ERROR, Message = "Invalid request ID" };
-
+                
                 var order = orders.Where(o => o.RequestId == RequestID.ToString() && o.Status == OrderStatus.QUEUED).FirstOrDefault();
 
                 if (order == null)
@@ -108,5 +109,27 @@ namespace PT.PointOne.WebAPI.Controllers
 
             return new OrderStatusResponse { Locked = Locked, Message = "", RequestId = requestID, Status = order.Status, TapStatus = order.TapStatus };
         }
+
+        [HttpGet]
+        [Route("Test")]
+        public void Test()
+        {
+            DistributR.Distribute("Testing12123");
+        }
+
+        public class BarStatusResponse
+        {
+            public string BeersServed;
+            public string PatronsActive;
+            public string MoneyEarnt;
+            public string MoneySpent;    
+        }
+       [HttpGet]
+       [Route("BarStatus")]
+       BarStatusResponse BarStatus()
+        {
+            return new BarStatusResponse();
+        }
+      
     }
 }
