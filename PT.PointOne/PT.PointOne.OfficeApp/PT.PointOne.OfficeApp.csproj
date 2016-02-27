@@ -43,6 +43,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="PT.PointOne.OfficeAppManifest\SharePointProjectItem.spdata">
       <SharePointProjectItemId>{f37abf26-b5f7-4d42-99a1-1e8ddb985769}</SharePointProjectItemId>
     </None>

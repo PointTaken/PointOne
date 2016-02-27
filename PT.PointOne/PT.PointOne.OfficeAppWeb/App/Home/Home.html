@@ -21,9 +21,13 @@
     <script src="../App.js" type="text/javascript"></script>   
     <link href="Home.css" rel="stylesheet" type="text/css" />
     <script src="Home.js" type="text/javascript"></script>
-    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.8/js/adal.min.js"></script>
-    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.8/js/adal-angular.min.js"></script>
-    
+   
+    <script src="../../Scripts/jquery.signalR-2.1.2.min.js"></script>
+    <script src="../../signalr/hubs"></script>
+    <script>
+                  
+    </script>
+
     <style>
         #content-header {
             background-image:url(../../Images/../../Images/lolologo.png);
@@ -45,13 +49,15 @@
         </div>
     </div>
     <div id="content-main">
-        <a href="#/new">Testing</a>
+      <button id="send" ng-click="Send()">Send</button>
+    
         <div class="padding">
-            <button ng-click="Login()"><i class="ms-Icon ms-Icon--lock" style="font-size:small" ></i>Log in</button>
-
+            <button ng-click="Login()" ng-show="true"><i class="ms-Icon ms-Icon--lock" style="font-size:small" ></i>Log in</button>
+            <div ng-show="true" ng-cloak>  
+                <h3>Hi {{ name }}</h3>        
             <div class="BarStatus">
                 <label>Bar status:</label><span>{{ BarOpen ? "Open" : "Closed" }}</span>
-                <button><i class="ms-Icon ms-Icon--lock" style="font-size:small"></i>{{BarOpen ? "Close" : "Open"}}</button>
+                <button><i class="" style="font-size:small"></i>{{BarOpen ? "Close" : "Open"}}</button>
             </div>
             <div class="News">
                 <h3>Breaking News</h3>
@@ -68,20 +74,21 @@
                     <li>Happy hour: {{ BarInfo.HappyHour ? "Yes" : "No"}}</li>
                 </ul>
                 <h4>Happy Hour</h4>
-                <button><i class="ms-Icon ms-Icon--lock" style="font-size:small" ng-click="ActivateHappyHour()"></i>{{BarInfo.HappyHour ? "Stop" : "Start"}}</button>
+                <button><i class="" style="font-size:small" ng-click="ActivateHappyHour()"></i>{{BarInfo.HappyHour ? "Stop" : "Start"}}</button>
                 <br/>
                 <h4>Serving:</h4>
-                <button><i class="ms-Icon ms-Icon--lock" style="font-size:small"></i>{{BarInfo.ServingStopped ? "Start serving" : "Stop serving"}}</button>
+                <button><i class="" style="font-size:small"></i>{{BarInfo.ServingStopped ? "Start serving" : "Stop serving"}}</button>
                 <br/>
                 <h4>Add data</h4><br/>
-                <button><i class="ms-Icon ms-Icon--arrowLeft" style="font-size:small"></i>Add data to document</button>
+                <button ng-click="AddToDocument()"><i class="ms-Icon ms-Icon--arrowLeft" style="font-size:small"></i>Add data to document</button>
                 <br/>
                 <h4>Auto-management-mode</h4><br />
                 <button><i class="ms-Icon ms-Icon--refresh" style="font-size:small"></i>{{ AutoManagementActive ? "Stop" : "Start"}}</button>
             </div>
-           
+           </div>
         </div>
     </div>
-   
+    <script src="../../Scripts/adal.min.js"></script>
+    <script src="../../Scripts/adal-angular.min.js"></script>
 </body>
 </html>

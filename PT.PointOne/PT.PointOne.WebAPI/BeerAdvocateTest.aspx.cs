@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
+
 namespace PT.PointOne.WebAPI
 {
     [HubName("Chat")]
