@@ -11,7 +11,7 @@ namespace PT.PointOne.WebAPI.Controllers
         [Route("All")]         
         public List<Stock> All()
         {
-            return SharePointOnline.StockList;
+            return Pub.StockList;
         }
     }
 }

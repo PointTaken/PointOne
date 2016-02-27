@@ -49,7 +49,7 @@ namespace PT.PointOne.WebAPI.Controllers
             order.TapStatus = TapStatus.Poured;
             order.Poured = DateTime.Now;
                         
-            SharePointOnline.UpdateOrder(OrderController.orders.Where(k => k.RequestId == request.RequestId).FirstOrDefault());
+            Pub.UpdateOrder(OrderController.orders.Where(k => k.RequestId == request.RequestId).FirstOrDefault());
 
             return new DeviceStatusResponse { RequestId = request.RequestId, TapStatus = order.TapStatus };
         }

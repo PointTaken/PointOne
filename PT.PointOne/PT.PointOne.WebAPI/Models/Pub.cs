@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace PT.PointOne.WebAPI
 {
-    public class SharePointOnline
+    public class Pub
     {
         public static bool AddNewOrder(Order order)
         {

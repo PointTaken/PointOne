@@ -53,7 +53,7 @@ namespace PT.PointOne.WebAPI.Controllers
                 Status = OrderStatus.QUEUED,
                 TapStatus = TapStatus.Waiting
             };
-            SharePointOnline.AddNewOrder(order);          
+            Pub.AddNewOrder(order);          
             orders.Add(order);
             DistributR.Distribute(BarStatus());
             return new OrderStatusResponse { Locked = Locked, RequestId = RequestId.ToString(), Status = order.Status, Message = "" };
