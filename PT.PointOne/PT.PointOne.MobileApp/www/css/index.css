@@ -43,7 +43,26 @@
     background-color: #3498db;
 }
 
+#order a {
+    color: #fff;
+}
+
 #backButton a {
     color: #fff;
+}
+
+
+#barButton {
+    background-color: #e74c3c;
+    margin: 1em;
+}
+
+#barButton a {
+    color: #fff;
+}
+
+.barImg img {
+    max-width: 80%;
+    margin-top: 20px;
 }
 
