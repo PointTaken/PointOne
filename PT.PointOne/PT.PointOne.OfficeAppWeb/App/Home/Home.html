@@ -21,7 +21,7 @@
     <script src="../App.js" type="text/javascript"></script>   
     <link href="Home.css" rel="stylesheet" type="text/css" />
     <script src="Home.js" type="text/javascript"></script>
-   
+    <script src="../../Scripts/jscharts.js"></script>   
     <script src="../../Scripts/jquery.signalR-2.1.2.min.js"></script>
     <script src="../../signalr/hubs"></script>
     <script>
@@ -49,10 +49,12 @@
         </div>
     </div>
     <div id="content-main">
-      <button id="send" ng-click="Send()">Send</button>
-    
+      <button id="send" ng-click="CreateChart()">Test</button>
+   
         <div class="padding">
             <button ng-click="Login()" ng-show="true"><i class="ms-Icon ms-Icon--lock" style="font-size:small" ></i>Log in</button>
+            <button  ng-click="CreateChart()">InsertChart</button>
+      
             <div ng-show="true" ng-cloak>  
                 <h3>Hi {{ name }}</h3>        
             <div class="BarStatus">
@@ -62,16 +64,31 @@
             <div class="News">
                 <h3>Breaking News</h3>
                 <p>{{ LatestNews.Text }}</p>
-            </div>
-            {{ Status ? "AUTH" : " NOAUTH"}}
-            <div class="Management">
+            </div>          
+            <div class="Management" style="color:white;">
                 <h3>Realtime data:</h3>
+                <div class="ms-Grid-row">
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Beer served:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">{{ BarInfo.SoldTonight}} (Yesterday: {{ BarInfo.SoldLastNight }})</div>
+                </div>
+                <div class="ms-Grid-row">
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Patrons:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10  ms-bgColor-blueMid"> {{ BarInfo.PatronsActive }}- </div>
+                </div>
+                <div class="ms-Grid-row" >
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Money earned:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">${{ BarInfo.MoneyEarnt }}</div>
+                </div>
+                <div class="ms-Grid-row" >
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Money spent:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">${{ BarInfo.MoneySpent }}</div>
+                </div>
+                <div class="ms-Grid-row" >
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Happy hour:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">{{ BarInfo.HappyHour ? "Yes" : "No"}}</div>
+                </div>              
                 <ul>
-                    <li>Beers served: {{ BarInfo.SoldTonight}} (Yesterday: {{ BarInfo.SoldLastNight }})</li>
-                    <li>Patrons: {{ BarInfo.PatronsActive }}</li>
-                    <li>Money earned: ${{ BarInfo.MoneyEarnt }}</li>
-                    <li>MoneySpent: ${{BarInfo.MoneySpent}}</li>
-                    <li>Happy hour: {{ BarInfo.HappyHour ? "Yes" : "No"}}</li>
+                
                 </ul>
                 <h4>Happy Hour</h4>
                 <button><i class="" style="font-size:small" ng-click="ActivateHappyHour()"></i>{{BarInfo.HappyHour ? "Stop" : "Start"}}</button>

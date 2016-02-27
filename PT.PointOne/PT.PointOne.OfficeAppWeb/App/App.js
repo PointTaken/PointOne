@@ -109,12 +109,12 @@ myapp.controller('Ctrl', ['$http', '$scope', '$interval', 'adalAuthenticationSer
     $http.get("https://pointone.azurewebsites.net/Order/BarStatus").success(function(d) { 
         $scope.BarInfo = d; 
     })
-  /*  {
-        SoldTonight: 34,
+   /*$scope.BarInfo = {
+        SoldTonight: 2,
         SoldLastNight: 433,
-        PatronsActive: 49,
-        MoneyEarnt: 455323,
-        MoneySpent: 36694,
+        PatronsActive: 13,
+        MoneyEarnt: 344,
+        MoneySpent: 144,
         HappyHour: false,
         ServingStopped:false
     };*/
@@ -144,20 +144,8 @@ myapp.controller('Ctrl', ['$http', '$scope', '$interval', 'adalAuthenticationSer
 
     $scope.Send = function()
     {
-        $.connection.hub.start().done(function () {
-            console.log("Sending hello");
-            chat.server.hello("TEST");
-        });
     }
-    $(document).ready(function () {
-        $("#send").click(function () {
-
-            $.connection.hub.start().done(function () {
-                console.log("Sending hello");
-                chat.server.hello("TEST");
-            });
-        });
-    });
+   
     $scope.AddToDocument = function () {
         Office.context.document.setSelectedDataAsync(
             [["Beers served", $scope.BarInfo.SoldTonight],
@@ -171,6 +159,69 @@ myapp.controller('Ctrl', ['$http', '$scope', '$interval', 'adalAuthenticationSer
             }
         });
     }
+    $scope.CreateChart = function() {
+       
+            // Run a batch operation against the Excel object model
+            Excel.run(function (ctx) {
+
+                // Create a proxy object for the active worksheet
+                var sheet = ctx.workbook.worksheets.getActiveWorksheet();
+
+                //Queue commands to set the report title in the worksheet
+                sheet.getRange("A1").values = "Sales Report";
+                sheet.getRange("A1").format.font.name = "Arial";
+                sheet.getRange("A1").format.font.size = 26;
+                var sales = 122 + parseInt($scope.BarInfo.SoldTonight);               
+                var guests = 122 + parseInt($scope.BarInfo.PatronsActive);
+                var earnings = 221 + parseInt($scope.BarInfo.MoneyEarnt);
+                var expenses = 23 + parseInt($scope.BarInfo.MoneySpent);
+                
+                //Create an array containing sample data
+                var values = [["What", "Q22015", "Q32015", "Q42015", "Q12016"],
+                              ["Total sales", 5000, 7000, 6544, sales],
+                              ["Guests", 400, 323, 276, guests],
+                              ["Earnings", 12000, 8766, 8456, earnings],
+                              ["Expenses", 1550, 1088, 692, expenses]
+                      ];
+
+                //Queue a command to write the sample data to the specified range
+                //in the worksheet and bold the header row
+               var range = sheet.getRange("A2:E6");
+               range.values = values;
+                sheet.getRange("A2:E6").format.font.bold = true;
+
+                //Queue a command to add a new chart
+                var chart = sheet.charts.add("ColumnClustered", range, "auto");
+
+                //Queue commands to set the properties and format the chart
+                chart.setPosition("G1", "L10");
+                chart.title.text = "Quarterly sales chart";
+                chart.legend.position = "right"
+                chart.legend.format.fill.setSolidColor("white");
+                chart.dataLabels.format.font.size = 15;
+                chart.dataLabels.format.font.color = "black";
+                var points = chart.series.getItemAt(0).points;
+                points.getItemAt(0).format.fill.setSolidColor("pink");
+                points.getItemAt(1).format.fill.setSolidColor('indigo');
+
+                //Run the queued-up commands, and return a promise to indicate task completion
+                return ctx.sync();
+            })
+              .then(function () {
+                  app.showNotification("Success");
+                  console.log("Success!");
+              })
+            .catch(function (error) {
+                // Always be sure to catch any accumulated errors that bubble up from the Excel.run execution
+                app.showNotification("Error: " + error);
+                console.log("Error: " + error);
+                if (error instanceof OfficeExtension.Error) {
+                    console.log("Debug info: " + JSON.stringify(error.debugInfo));
+                }
+            });
+        }
+    
+  
         
         
       function AuthenticateAD()
