@@ -7,9 +7,11 @@ $("#pour").on("click", function() {
 });
 
 function order() {
+    $("#order").hide();
     var name = $("#name").val();
+    
     var status = $("#status");
-    var data = JSON.stringify({ OrderId: "123", UserId: "31", Price: "49" });
+    var data = { OrderId: "123", UserId: "31", Price: "49" };
     $.ajax({
         url: "http://pointone.azurewebsites.net/Order/New",
         type: "POST",
@@ -19,18 +21,20 @@ function order() {
             "Access-Control-Allow-Origin": "*"
         },
         data: data,
-        success: function(d) {
-            $("#requestid").val(d.RequestId);
+        success: function (d) {
+            window.sessionStorage.setItem("requestId", d.RequestId);
+            sessionStorage["requestId"] = d.RequestId;
             status.html("Ordered, ready to pour!");
             $("#order").fadeOut();
             $("#pour").fadeIn();
+            $("#pour").css("background-color", "#3498db");
         }
     });
 }
 
 function PourOrder() {
     var status = $("#status");
-    var data = JSON.stringify({ RequestId: $("#requestid").val() });
+    var data = { RequestId: window.sessionStorage.getItem("requestId") };
     $.ajax({
         url: "http://pointone.azurewebsites.net/Order/Pour",
         type: "POST",
@@ -41,11 +45,11 @@ function PourOrder() {
         },
         data: data,
         success: function (d) {
-            if (d.Status == 1) {
+            if (d.Status === 1) {
                 status.html("Tap is busy right now, try again when it's free!");
                 return;
             }
-            if (d.Status == 4) {
+            if (d.Status === 4) {
                 status.html("Error: " + d.Message + " Try again later!");
                 return;
             }
@@ -54,28 +58,13 @@ function PourOrder() {
             GetPourStatus();
         }
     });
-    $.post("http://pointone.azurewebsites.net/Order/Pour", { RequestId: $("#requestid").val() }, function (d) {
-        if (d.Status == 1) {
-            status.html("Tap is busy right now, try again when it's free!");
-            return;
-        }
-
-        if (d.Status == 4) {
-            status.html("Error: " + d.Message + " Try again later!");
-            return;
-        }
-
-        status.html('Pouring, please wait!');
-        $("#pour").fadeOut();
-        GetPourStatus();
-    });
 }
 
 function GetPourStatus() {
     var interval = setInterval(function () {
         var rid = $("#requestid").val();
         var status = $("#status");
-        $.get("/Order/Status/" + rid, function (d) {
+        $.get("http://pointone.azurewebsites.net/Order/Status/" + rid, function (d) {
             status.html(ParseStatus(d.Status));
             console.log(d);
             if (d.Status == 5) { // Order complete

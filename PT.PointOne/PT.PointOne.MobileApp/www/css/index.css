@@ -43,7 +43,41 @@
     background-color: #3498db;
 }
 
+#order a {
+    color: #fff;
+}
+
 #backButton a {
     color: #fff;
 }
 
+
+#barButton {
+    background-color: #e74c3c;
+    margin: 1em;
+}
+
+#barButton a {
+    color: #fff;
+}
+
+.barImg img {
+    max-width: 38%;
+    margin-top: 20px;
+}
+
+ul.nav.nav-list.nav-list-bricks {
+    text-align: left;
+}
+
+.nav-list-bricks>li {
+    z-index: -1;
+}
+
+.infoBar {
+    background-color: #65DAC3;
+}
+
+.nav-list>li {
+    text-align: left;
+}
