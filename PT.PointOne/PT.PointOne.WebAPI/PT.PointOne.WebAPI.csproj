@@ -13,8 +13,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>IOTHubInterface</RootNamespace>
-    <AssemblyName>IOTHubInterface</AssemblyName>
+    <RootNamespace>PT.PointOne.WebAPI</RootNamespace>
+    <AssemblyName>PT.PointOne.WebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -289,10 +289,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\IOTController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\TapController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\DeviceStatusResponse.cs" />
     <Compile Include="Models\IOTInfo.cs" />
     <Compile Include="Models\NewOrderRequest.cs" />
@@ -300,6 +302,7 @@
     <Compile Include="Models\OrderStatusRequest.cs" />
     <Compile Include="Models\OrderStatusResponse.cs" />
     <Compile Include="Models\SharePointOnline.cs" />
+    <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\TapRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -312,6 +315,10 @@
     <None Include="Properties\PublishProfiles\pointone - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\pointone - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ytf.pubxml" />
+    <Content Include="Scripts\angular-mocks.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
     <Content Include="Scripts\jquery-2.2.0.js" />
     <Content Include="Scripts\jquery-2.2.0.min.js" />
@@ -323,11 +330,20 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App\" />
+    <Folder Include="Views\Stock\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-2.2.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PT.PointOne.OfficeAppWeb\PT.PointOne.OfficeAppWeb.csproj">
+      <Project>{2cb930da-673d-4646-aa7c-97dcb493c3bf}</Project>
+      <Name>PT.PointOne.OfficeAppWeb</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -6,13 +6,13 @@
     <script src="\Scripts\jquery-2.2.0.min.js"></script>
     <script>
       
-        function order() {
-            debugger;
+        function order() {          
             var name = $("#name").val();
             var status = $("#status");
            
             $.post("/Order/New", { OrderId: "123", UserId:"31", Price:"49" }, function (d) {
-                $("#requestid").text(d.RequestId);
+                console.log(d);
+                $("#requestid").val(d.RequestId);
                 status.html('Ordered, ready to pour!');
                 $("#order").fadeOut();
                 $("#pour").fadeIn();
@@ -80,9 +80,7 @@
     </script>
 </head>
 <body>
-    <h1>ARC Tap Prototype</h1>
-  
-    
+    <h1>ARC Tap Prototype</h1>      
     <input type="hidden" id="requestid" />
     <a href="#" onclick="order()" id="order">Order a beer</a>
     <a href="#" onclick="PourOrder()" id="pour" style="display:none;">Pour</a>

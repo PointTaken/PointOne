@@ -6,8 +6,21 @@
     border-radius: 0 !important;
 }
 
+.nav-pills>li:nth-child(2)>a {
+    background-color: #23CEAC;
+}
+
 .nav-pills>li:nth-child(3)>a {
     background-color: #65DAC3;
+}
+
+.nav-pills>li:active {
+    background-color: #34495e;
+}
+
+.beerImg img {
+    max-height: 200px;
+    padding: .5em;
 }
 
 .centerText {
@@ -25,3 +38,12 @@
     border-radius: 200px;
     margin-top: 1rem;
 }
+
+#order {
+    background-color: #3498db;
+}
+
+#backButton a {
+    color: #fff;
+}
+
