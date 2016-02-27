@@ -15,7 +15,7 @@
 		3047A5121AB8059700498E2A /* build-debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A50F1AB8059700498E2A /* build-debug.xcconfig */; };
 		3047A5131AB8059700498E2A /* build-release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5101AB8059700498E2A /* build-release.xcconfig */; };
 		3047A5141AB8059700498E2A /* build.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3047A5111AB8059700498E2A /* build.xcconfig */; };
-		958E2350BCF34B15A1C0E9FB /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 37E729405B6C4107B46A8801 /* CDVInAppBrowser.m */; };
+		D2D925A991A94BD4963FF9A1 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A9B425EDA1644AFAC98D59A /* CDVInAppBrowser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +55,8 @@
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "PT.PointOne.MobileApp/config.xml"; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		37E729405B6C4107B46A8801 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
-		CD75E2417E8A4607858618CC /* CDVInAppBrowser.h */ = {isa = PBXFileReference; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		3A9B425EDA1644AFAC98D59A /* CDVInAppBrowser.m */ = {isa = PBXFileReference; name = "CDVInAppBrowser.m"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		D5533D80DEEB4373B8B45BA8 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; name = "CDVInAppBrowser.h"; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,8 +159,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				37E729405B6C4107B46A8801 /* CDVInAppBrowser.m */,
-				CD75E2417E8A4607858618CC /* CDVInAppBrowser.h */,
+				3A9B425EDA1644AFAC98D59A /* CDVInAppBrowser.m */,
+				D5533D80DEEB4373B8B45BA8 /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
 			path = "PT.PointOne.MobileApp/Plugins";
@@ -275,7 +275,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				958E2350BCF34B15A1C0E9FB /* CDVInAppBrowser.m in Sources */,
+				D2D925A991A94BD4963FF9A1 /* CDVInAppBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

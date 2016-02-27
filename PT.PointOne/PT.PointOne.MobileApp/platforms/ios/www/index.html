@@ -7,21 +7,28 @@
         Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
         For details, see http://go.microsoft.com/fwlink/?LinkID=617521
     -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://pointone.azurewebsites.net data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
     <title>PT.PointOne.MobileApp</title>
     <link href="css/vendor/bootstrap.min.css" rel="stylesheet" />
     <!-- PT.PointOne.MobileApp references -->
     <link href="css/flat-ui-pro.min.css" rel="stylesheet" />
     <link href="css/index.css" rel="stylesheet" />
+    <link href="css/menu.css" rel="stylesheet" />
 </head>
 <body>
-    <ul class="nav nav-pills">
-    
-        <li class="active"><a href="#fakelink">Popular</a></li>
-        <li><a href="#fakelink">Newest</a></li>
-        <li><a href="#fakelink">Bestselling</a></li>
-    </ul>
-    <img src="images/85c61f471b1dd8c0f5d6e9ea5601a3e7_320x320.jpg" />
+    <nav style="margin-top: 10px">
+        <a class="dropdown-toggle" href="#" title="Menu">&#9776;</a>
+        <ul class="dropdown">
+            <li class="active"><a href="popular.html">Popular</a></li>
+            <li><a href="newest.html">Newest</a></li>
+            <li><a href="bestselling.html">Bestselling</a></li>
+        </ul>
+    </nav>
+    <div class="beerImg">
+        <img src="images/85c61f471b1dd8c0f5d6e9ea5601a3e7_320x320.jpg" />
+    </div>
+
     <p>Hello, order you beer HULK SMASH! IPA</p>
     <button class="btn btn-default btn-wide" id="order">
         ORDER
@@ -41,5 +48,6 @@
     <script src="cordova.js"></script>
     <script src="scripts/platformOverrides.js"></script>
     <script src="scripts/index.js"></script>
+    <script src="scripts/menu.js"></script>
 </body>
 </html>
