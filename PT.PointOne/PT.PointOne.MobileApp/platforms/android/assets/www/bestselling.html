@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
+    <title>PT.PointOne.MobileApp</title>
+    <link href="css/vendor/bootstrap.min.css" rel="stylesheet" />
+    <!-- PT.PointOne.MobileApp references -->
+    <link href="css/flat-ui-pro.min.css" rel="stylesheet" />
+    <link href="css/index.css" rel="stylesheet" />
+</head>
+<body>
+    <ul class="nav nav-pills">
+        <li><a href="popular.html">Popular</a></li>
+        <li ><a href="newest.html">Newest</a></li>
+        <li class="active"><a href="bestselling.html">Bestselling</a></li>
+    </ul>
+    <div class="centerText">
+        <p>HERE COMETH BEST SELLING BEERS!</p>
+    </div>
+    <button class="btn btn-default btn-wide" id="backButton">
+        <a href="index.html">Index</a>
+    </button>
+
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="scripts/jquery-2.2.0.js"></script>
+    <script src="scripts/knockout-3.4.0.js"></script>
+    <script src="scripts/flat-ui-pro.min.js"></script>
+    <script src="scripts/app.js"></script>
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/index.js"></script>
+</body>
+</html>

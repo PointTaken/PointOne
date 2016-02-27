@@ -198,7 +198,7 @@
     <ManifestKeyFile>PT.PointOne.Outlook_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>049363AC11A79C5B9BE1DBD33C7489D04B1B045F</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>BCC7C3D58A4D4060E736CAD65C9F72345F478CA6</ManifestCertificateThumbprint>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
