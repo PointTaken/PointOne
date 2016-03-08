@@ -11,10 +11,11 @@
 
     public class OrderStatusResponse
     {
-        public OrderStatus Status;
-        public TapStatus TapStatus; 
-        public string RequestId;
-        public bool Locked;
-        public string Message; 
+        public OrderStatus Status
+        { get; set; }
+        public TapStatus TapStatus { get; set; } 
+        public string RequestId { get; set; }
+        public bool Locked { get; set; }
+        public string Message { get; set; }
     }
 }

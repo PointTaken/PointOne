@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <title></title>
+
+    <link href="../../Content/Office.css" rel="stylesheet" type="text/css" />
+    <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js" type="text/javascript"></script>
+
+    <!-- To enable offline debugging using a local reference to Office.js, use:                        -->
+    <!-- <script src="../../Scripts/Office/MicrosoftAjax.js" type="text/javascript"></script>  -->
+    <!-- <script src="../../Scripts/Office/1/office.js" type="text/javascript"></script>  -->
+    <script src="../../Scripts/jquery-2.2.1.min.js"></script>  
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.min.css">
+    <link rel="stylesheet" href="https://appsforoffice.microsoft.com/fabric/1.0/fabric.components.min.css">
+    <script src="../../Scripts/angular.min.js"></script>
+    <script src="../../Scripts/angular-route.min.js"></script>
+    <link href="../App.css" rel="stylesheet" type="text/css" />
+    <script src="../App.js" type="text/javascript"></script>   
+    <link href="Home.css" rel="stylesheet" type="text/css" />
+    <script src="Home.js" type="text/javascript"></script>
+    <script src="../../Scripts/jscharts.js"></script>   
+    <script src="../../Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="../../signalr/hubs"></script>
+    <script>
+                  
+    </script>
+
+    <style>
+        #content-header {
+            background-image:url(../../Images/../../Images/lolologo.png);
+            background-repeat:no-repeat;
+            background-position-x:right;
+            background-size:79px;
+        }
+        h4 {
+            margin-bottom:0px;
+        }
+    </style>
+ <base href="/App/Home/Home.html" />
+</head>
+<body ng-app="myapp" ng-controller="Ctrl">
+    <div id="content-header">
+        <div class="padding">
+          <h1>Point Taken Arms</h1>
+            <p style="margin-top:-15px;">Superhero Hangout</p>
+        </div>
+    </div>
+    <div id="content-main">
+      <button id="send" ng-click="CreateChart()">Test</button>
+   
+        <div class="padding">
+            <button ng-click="Login()" ng-show="true"><i class="ms-Icon ms-Icon--lock" style="font-size:small" ></i>Log in</button>
+            <button  ng-click="CreateChart()">InsertChart</button>
+      
+            <div ng-show="true" ng-cloak>  
+                <h3>Hi {{ name }}</h3>        
+            <div class="BarStatus">
+                <label>Bar status:</label><span>{{ BarOpen ? "Open" : "Closed" }}</span>
+                <button><i class="" style="font-size:small"></i>{{BarOpen ? "Close" : "Open"}}</button>
+            </div>
+            <div class="News">
+                <h3>Breaking News</h3>
+                <p>{{ LatestNews.Text }}</p>
+            </div>          
+            <div class="Management" style="color:white;">
+                <h3>Realtime data:</h3>
+                <div class="ms-Grid-row">
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Beer served:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">{{ BarInfo.SoldTonight}} (Yesterday: {{ BarInfo.SoldLastNight }})</div>
+                </div>
+                <div class="ms-Grid-row">
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Patrons:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10  ms-bgColor-blueMid"> {{ BarInfo.PatronsActive }}- </div>
+                </div>
+                <div class="ms-Grid-row" >
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Money earned:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">${{ BarInfo.MoneyEarnt }}</div>
+                </div>
+                <div class="ms-Grid-row" >
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Money spent:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">${{ BarInfo.MoneySpent }}</div>
+                </div>
+                <div class="ms-Grid-row" >
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md4 ms-u-lg2 ms-bgColor-blueMid">Happy hour:</div>
+                    <div class="ms-Grid-col ms-u-sm6 ms-u-md8 ms-u-lg10 ms-bgColor-blueMid">{{ BarInfo.HappyHour ? "Yes" : "No"}}</div>
+                </div>              
+                <ul>
+                
+                </ul>
+                <h4>Happy Hour</h4>
+                <button><i class="" style="font-size:small" ng-click="ActivateHappyHour()"></i>{{BarInfo.HappyHour ? "Stop" : "Start"}}</button>
+                <br/>
+                <h4>Serving:</h4>
+                <button><i class="" style="font-size:small"></i>{{BarInfo.ServingStopped ? "Start serving" : "Stop serving"}}</button>
+                <br/>
+                <h4>Add data</h4><br/>
+                <button ng-click="AddToDocument()"><i class="ms-Icon ms-Icon--arrowLeft" style="font-size:small"></i>Add data to document</button>
+                <br/>
+                <h4>Auto-management-mode</h4><br />
+                <button><i class="ms-Icon ms-Icon--refresh" style="font-size:small"></i>{{ AutoManagementActive ? "Stop" : "Start"}}</button>
+            </div>
+           </div>
+        </div>
+    </div>
+    <script src="../../Scripts/adal.min.js"></script>
+    <script src="../../Scripts/adal-angular.min.js"></script>
+</body>
+</html>
